@@ -1,0 +1,98 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5">
+  <diagram name="Page-1" id="WifyZxSubYhahMOSRe8s">
+    <mxGraphModel dx="2003" dy="1037" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="690" pageHeight="980" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="igi41z_ms5veHtvG2Q75-2" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;USERS&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillStyle=auto;fillColor=light-dark(#9AC7BF,#32AEFB);fontColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#000000;" edge="1" parent="1" source="igi41z_ms5veHtvG2Q75-3" target="igi41z_ms5veHtvG2Q75-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-30" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;1:n&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="igi41z_ms5veHtvG2Q75-17">
+          <mxGeometry x="-0.0614" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-3" value="&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; id (PK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; email (UK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; password&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; role&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; active&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&amp;nbsp; created_at&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBackgroundColor=none;fontColor=#000000;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="200" y="120" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#000000;" edge="1" parent="1" source="igi41z_ms5veHtvG2Q75-4" target="igi41z_ms5veHtvG2Q75-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-31" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;1:n&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="igi41z_ms5veHtvG2Q75-22">
+          <mxGeometry x="-0.072" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-4" value="&lt;font style=&quot;font-size: 15px; color: rgb(0, 0, 0);&quot;&gt;CHURCHES&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;fillColor=#32AEFB;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#000000;" edge="1" parent="1" source="igi41z_ms5veHtvG2Q75-5" target="igi41z_ms5veHtvG2Q75-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-32" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;1:n&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="igi41z_ms5veHtvG2Q75-18">
+          <mxGeometry x="-0.088" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-5" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; id (PK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; name&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; address&lt;/span&gt;&lt;br&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; created_at&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBackgroundColor=none;strokeColor=#000000;fillColor=#FFFFFF;gradientColor=default;" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-6" value="&lt;font style=&quot;font-size: 15px; color: rgb(0, 0, 0);&quot;&gt;COURSES&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#32AEFB;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="320" y="320" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#000000;" edge="1" parent="1" source="igi41z_ms5veHtvG2Q75-7" target="igi41z_ms5veHtvG2Q75-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-33" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;1:n&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="igi41z_ms5veHtvG2Q75-23">
+          <mxGeometry x="-0.2278" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-7" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; id (PK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; name&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; description&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; price&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; active&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; church_id (FK)&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; created_at&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=light-dark(#FFFFFF, #000000);" vertex="1" parent="1">
+          <mxGeometry x="320" y="360" width="120" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-9" value="&lt;font style=&quot;font-size: 15px; color: rgb(0, 0, 0);&quot;&gt;PEOPLE&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#32AEFB;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="-45" y="489" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#000000;" edge="1" parent="1" source="igi41z_ms5veHtvG2Q75-10" target="igi41z_ms5veHtvG2Q75-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-35" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;1:n&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="igi41z_ms5veHtvG2Q75-19">
+          <mxGeometry x="-0.0477" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-10" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; id (PK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; first_name&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; last_name&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; document&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; phone&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; email&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; church_id (FK)&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; created_at&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="-45" y="529" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#000000;" edge="1" parent="1" source="igi41z_ms5veHtvG2Q75-11" target="igi41z_ms5veHtvG2Q75-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-11" value="&lt;font style=&quot;font-size: 15px; color: rgb(0, 0, 0);&quot;&gt;OFFERINGS&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#32AEFB;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="-45" y="769" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-12" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; id (PK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; first_name&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; last_name&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; document&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; phone&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; email&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; church_id (FK)&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; created_at&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="-45" y="809" width="120" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" edge="1" parent="1" source="igi41z_ms5veHtvG2Q75-13" target="igi41z_ms5veHtvG2Q75-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-13" value="&lt;font style=&quot;font-size: 15px; color: rgb(0, 0, 0);&quot;&gt;ENROLLMENTS&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#32AEFB;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="320" y="537" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-14" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; id (PK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; person_id (FK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; couerse_id (FK)&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp;status&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; payment_id (ref)&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; created_at&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="320" y="577" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-15" value="&lt;font style=&quot;font-size: 15px; color: rgb(0, 0, 0);&quot;&gt;PAYMENTS&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#32AEFB;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="324" y="769" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="igi41z_ms5veHtvG2Q75-16" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; id (PK)&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; first_name&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent;&quot;&gt;&amp;nbsp; last_name&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; document&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; phone&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; email&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; church_id (FK)&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; created_at&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="324" y="809" width="120" height="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
