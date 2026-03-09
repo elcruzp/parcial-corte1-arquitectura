@@ -1,0 +1,55 @@
+# ========================================================================
+# CONFIGURACIÓN LOCAL/DESARROLLO (CAMBIO 5: CONFIGURACIÓN EXTERNALIZADA)
+# ========================================================================
+# Perfil: local
+# Uso: Desarrollo local con BD PostgreSQL en Docker/local
+# Variables de entorno opcionales (usa defaults si no se definen)
+# ========================================================================
+
+spring:
+  # Configuración específica para desarrollo
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/iglesiadmin}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Recrear esquema en cada inicio (desarrollo)
+    properties:
+      hibernate:
+        format_sql: true     # Formatear SQL en desarrollo
+        show_sql: true       # Mostrar SQL en consola
+
+  # Configuración H2 para tests (opcional)
+  # h2:
+  #   console:
+  #     enabled: true
+
+# Configuración JWT para desarrollo (menos restrictiva)
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-key-for-local-development-only-32-chars}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:1440}  # 24 horas en desarrollo
+
+# Logging detallado en desarrollo
+logging:
+  level:
+    com.iglesia: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Servidor de desarrollo
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-stacktrace: always  # Mostrar stack traces en desarrollo
+
+# Configuración de desarrollo
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Exponer todos los endpoints en desarrollo

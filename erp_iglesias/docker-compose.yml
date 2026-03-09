@@ -10,14 +10,37 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
+  # ========================================================================
+  # BACKEND - CAMBIO 5: CONFIGURACIÓN EXTERNALIZADA
+  # ========================================================================
+  # Variables de entorno para configuración externalizada
+  # En desarrollo: usa perfil 'local' (application-local.yml)
+  # En producción: cambiar SPRING_PROFILES_ACTIVE=prod
+  # ========================================================================
   backend:
     build:
       context: ./backend
     environment:
+      # Base de datos
       DB_URL: jdbc:postgresql://db:5432/iglesiadmin
       DB_USER: postgres
       DB_PASSWORD: postgres
-      JWT_SECRET: super-secret-key-change-please-32bytes
+
+      # JWT Configuration (Cambio 5)
+      JWT_SECRET: super-secret-key-change-please-32bytes-minimum-for-prod
+      JWT_EXPIRATION_MINUTES: 480  # 8 horas
+
+      # Perfil de Spring (Cambio 5)
+      SPRING_PROFILES_ACTIVE: local  # Cambiar a 'prod' en producción
+
+      # Servidor
+      SERVER_PORT: 8080
+      CONTEXT_PATH: /api
+
+      # Logging (Cambio 5)
+      LOG_LEVEL: INFO
+      HIBERNATE_SHOW_SQL: "false"
+      HIBERNATE_FORMAT_SQL: "false"
     ports:
       - "8080:8080"
     depends_on:

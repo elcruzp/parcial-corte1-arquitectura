@@ -3,6 +3,8 @@ package com.iglesia;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,13 +16,26 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.stereotype.Service;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * Controlador REST para gestión de personas.
- * Implementa ADR-001 (Service Layer) y ADR-002 (DTO + Mapper Pattern).
+ * Implementa ADR-001 (Service Layer), ADR-002 (DTO + Mapper Pattern),
+ * ADR-003 (Global Exception Handler), ADR-004 (JSR-303 Validation),
+ * ADR-005 (Logging Centralizado con SLF4J) y ADR-010 (Configuración Externalizada).
+ *
+ * CAMBIO 5 IMPLEMENTADO: Configuración Externalizada (ADR-010)
+ * - application.yml: Configuración base con variables de entorno
+ * - application-local.yml: Desarrollo con logging detallado
+ * - application-prod.yml: Producción con configuración segura
+ * - JwtConfig.java: Clase de configuración tipada para JWT
+ * - Variables de entorno: DB_URL, JWT_SECRET, SPRING_PROFILES_ACTIVE, etc.
  */
 @RestController
 @RequestMapping("/api/people")
@@ -174,23 +189,29 @@ public class PersonController {
 
     /**
      * DTO para solicitud de creación de persona.
-     * Incluye validaciones declarativas (JSR-303) para garantizar datos válidos
+     * Incluye validaciones declarativas (JSR-303/Jakarta) para garantizar datos válidos
      * antes de que lleguen a la capa de servicio.
+     * ADR-004: Validación declarativa reemplaza validación imperativa.
      */
     public record PersonCreateRequest(
         @NotBlank(message = "El nombre es requerido")
+        @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
         String firstName,
 
         @NotBlank(message = "El apellido es requerido")
+        @Size(min = 2, max = 50, message = "El apellido debe tener entre 2 y 50 caracteres")
         String lastName,
 
         @NotBlank(message = "El documento es requerido")
+        @Pattern(regexp = "^[0-9]{8,12}$", message = "El documento debe contener solo números (8-12 dígitos)")
         String document,
 
         @NotBlank(message = "El teléfono es requerido")
+        @Pattern(regexp = "^[0-9+\\-\\s()]{7,15}$", message = "El teléfono debe tener un formato válido")
         String phone,
 
         @Email(message = "El email debe ser válido")
+        @NotBlank(message = "El email es requerido")
         String email,
 
         @NotNull(message = "La iglesia es requerida")
@@ -319,6 +340,10 @@ public class PersonController {
     @Service
     @Transactional
     public static class PersonServiceImpl implements PersonService {
+
+        // Logger centralizado (ADR-005)
+        private static final Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
+
         private final PersonRepository personRepository;
         private final ChurchRepository churchRepository;
         private final PersonMapper personMapper;  // Inyección de mapper (ADR-002)
@@ -333,33 +358,100 @@ public class PersonController {
 
         @Override
         public PersonResponseDTO create(PersonCreateRequest request) {
-            // Lógica de negocio movida del controlador (ADR-001)
-            Church church = requireChurch();
+            // Logging: Inicio de operación (ADR-005)
+            logger.info("Iniciando creación de persona con email: {}", request.email());
 
-            // Conversión con mapper (ADR-002: DTO -> Entity)
-            Person person = personMapper.toPerson(request);
-            person.setChurch(church);
+            try {
+                // Lógica de negocio movida del controlador (ADR-001)
+                Church church = requireChurch();
+                logger.debug("Iglesia obtenida: {} (ID: {})", church.getName(), church.getId());
 
-            Person saved = personRepository.save(person);
+                // Validación de reglas de negocio (ADR-004)
+                validateBusinessRules(request);
+                logger.debug("Validaciones de negocio completadas para email: {}", request.email());
 
-            // Retorna DTO mapeado de la entidad (ADR-002: Entity -> DTO Response)
-            return personMapper.toResponseDTO(saved);
+                // Conversión con mapper (ADR-002: DTO -> Entity)
+                Person person = personMapper.toPerson(request);
+                person.setChurch(church);
+                logger.debug("Persona mapeada desde DTO: {} {}", person.getFirstName(), person.getLastName());
+
+                Person saved = personRepository.save(person);
+                logger.info("Persona creada exitosamente con ID: {} y email: {}", saved.getId(), saved.getEmail());
+
+                // Retorna DTO mapeado de la entidad (ADR-002: Entity -> DTO Response)
+                PersonResponseDTO response = personMapper.toResponseDTO(saved);
+                logger.debug("Respuesta DTO preparada para persona ID: {}", saved.getId());
+
+                return response;
+
+            } catch (Exception e) {
+                // Logging: Error en operación (ADR-005)
+                logger.error("Error al crear persona con email: {}. Causa: {}", request.email(), e.getMessage(), e);
+                throw e; // Re-lanzar para que GlobalExceptionHandler lo maneje
+            }
+        }
+
+        /**
+         * Validación adicional de negocio: Verificar email duplicado.
+         * Esta validación no puede ser declarativa porque requiere acceso a BD,
+         * pero se centraliza aquí para mantener consistencia.
+         * 
+         * NOTA: PersonRepository debe tener el método existsByEmail(String) o findByEmail(String)
+         * Si usa findByEmail, cambiar a: personRepository.findByEmail(request.email()).isPresent()
+         */
+        private void validateBusinessRules(PersonCreateRequest request) {
+            // Verificar email duplicado (regla de negocio)
+            // Este método debería estar definido en PersonRepository
+            // Opción 1: Si PersonRepository tiene existsByEmail (recomendado)
+            if (personRepository.existsByEmail(request.email())) {
+                throw new DuplicateResourceException("Ya existe una persona con este email");
+            }
+            
+            /* Opción 2: Si PersonRepository tiene findByEmail (alternativa)
+            if (personRepository.findByEmail(request.email()).isPresent()) {
+                throw new DuplicateResourceException("Ya existe una persona con este email");
+            }
+            */
+
+            // Aquí se pueden agregar más validaciones de negocio en el futuro
+            // sin modificar el controlador ni el DTO
         }
 
         @Override
         public List<PersonResponseDTO> list() {
-            Church church = requireChurch();
-            List<Person> persons = personRepository.findAllByChurchId(church.getId());
+            // Logging: Inicio de operación (ADR-005)
+            logger.info("Iniciando consulta de lista de personas");
 
-            // Mapeo de lista de entidades a DTOs (ADR-002)
-            return personMapper.toResponseDTOList(persons);
+            try {
+                Church church = requireChurch();
+                logger.debug("Iglesia obtenida para listado: {} (ID: {})", church.getName(), church.getId());
+
+                List<Person> persons = personRepository.findAllByChurchId(church.getId());
+                logger.info("Encontradas {} personas para la iglesia {}", persons.size(), church.getName());
+
+                // Mapeo de lista de entidades a DTOs (ADR-002)
+                List<PersonResponseDTO> response = personMapper.toResponseDTOList(persons);
+                logger.debug("Lista de personas mapeada a DTOs: {} registros", response.size());
+
+                return response;
+
+            } catch (Exception e) {
+                // Logging: Error en operación (ADR-005)
+                logger.error("Error al consultar lista de personas. Causa: {}", e.getMessage(), e);
+                throw e; // Re-lanzar para que GlobalExceptionHandler lo maneje
+            }
         }
 
         private Church requireChurch() {
-            return churchRepository.findAll()
+            logger.debug("Obteniendo iglesia por defecto del sistema");
+
+            Church church = churchRepository.findAll()
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Debe registrar una iglesia primero"));
+
+            logger.debug("Iglesia encontrada: {} (ID: {})", church.getName(), church.getId());
+            return church;
         }
     }
 
@@ -445,7 +537,139 @@ public class PersonController {
     // ========================================================================
     // FIN IMPLEMENTACIÓN ADR-003
     // ========================================================================
+
+    // ========================================================================
+    // IMPLEMENTACIÓN ADR-004: JSR-303/JAKARTA VALIDATION (VALIDACIÓN DECLARATIVA)
+    // ========================================================================
+
+    /*
+    // ========================================================================
+    // CÓDIGO ANTIGUO - ADR-004 (MALAS PRÁCTICAS)
+    // ========================================================================
+    // Problema: Validación imperativa dispersa en controladores y servicios.
+    // Violación de SRP: Controladores manejan validación además de HTTP.
+    // Violación de OCP: Agregar validaciones requiere modificar código existente.
+    // Consecuencia: Código duplicado, difícil mantenimiento, validaciones inconsistentes.
+    // ========================================================================
+
+    // Ejemplo de validación manual ANTES (en el servicio):
+    @Override
+    public PersonResponseDTO create(PersonCreateRequest request) {
+        // Validación imperativa (INCORRECTO)
+        if (request.firstName() == null || request.firstName().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre es requerido");
+        }
+        if (request.lastName() == null || request.lastName().trim().isEmpty()) {
+            throw new IllegalArgumentException("El apellido es requerido");
+        }
+        if (request.document() == null || request.document().trim().isEmpty()) {
+            throw new IllegalArgumentException("El documento es requerido");
+        }
+        if (request.email() == null || !request.email().contains("@")) {
+            throw new IllegalArgumentException("El email debe ser válido");
+        }
+        if (request.churchId() == null) {
+            throw new IllegalArgumentException("La iglesia es requerida");
+        }
+
+        // Verificar duplicados manualmente
+        if (personRepository.existsByEmail(request.email())) {
+            throw new IllegalArgumentException("Email ya existe");
+        }
+
+        // Después de TODAS las validaciones...
+        Church church = requireChurch();
+        Person person = personMapper.toPerson(request);
+        person.setChurch(church);
+        Person saved = personRepository.save(person);
+        return personMapper.toResponseDTO(saved);
+    }
+
+    // ========================================================================
+    // FIN CÓDIGO ANTIGUO - ADR-004
+    // ========================================================================
+    */
+
+    // ========================================================================
+    // FIN IMPLEMENTACIÓN ADR-004
+    // ========================================================================
 }
+
+// ========================================================================
+// INTERFACES DE REPOSITORIO (PARTE DE ADR-001 Y ADR-004)
+// ========================================================================
+/**
+ * Repositorio para operaciones de BD con entidades Person.
+ * Extiende JpaRepository para operaciones CRUD básicas.
+ */
+@Repository
+interface PersonRepository extends JpaRepository<Person, Long> {
+    // Método para verificar existencia de email (usado en ADR-004)
+    boolean existsByEmail(String email);
+    
+    // Método para listar personas por iglesia (usado en ADR-001)
+    List<Person> findAllByChurchId(Long churchId);
+}
+
+/**
+ * Repositorio para operaciones de BD con entidades Church.
+ */
+@Repository
+interface ChurchRepository extends JpaRepository<Church, Long> {
+    // Métodos básicos heredados de JpaRepository
+}
+
+// ========================================================================
+// IMPLEMENTACIÓN ADR-005: LOGGING CENTRALIZADO CON SLF4J
+// ========================================================================
+
+/*
+ // ========================================================================
+ // CÓDIGO ANTIGUO - ADR-005 (MALAS PRÁCTICAS)
+ // ========================================================================
+ // Problema: Sin logging o logging inconsistente.
+ // Violación de SRP: Código de negocio mezclado con debugging.
+ // Consecuencia: Difícil debugging en producción, no trazabilidad.
+ // ========================================================================
+
+ // Ejemplo de código ANTES (sin logging):
+ @Override
+ public PersonResponseDTO create(PersonCreateRequest request) {
+     Church church = requireChurch();
+
+     validateBusinessRules(request);
+
+     Person person = personMapper.toPerson(request);
+     person.setChurch(church);
+
+     Person saved = personRepository.save(person);
+
+     return personMapper.toResponseDTO(saved);
+     // Sin logging: No sabemos qué pasó, cuándo, ni por qué falló
+ }
+
+ @Override
+ public List<PersonResponseDTO> list() {
+     Church church = requireChurch();
+     List<Person> persons = personRepository.findAllByChurchId(church.getId());
+     return personMapper.toResponseDTOList(persons);
+     // Sin logging: No sabemos si se ejecutó, cuántos registros retornó
+ }
+
+ // ========================================================================
+ // FIN CÓDIGO ANTIGUO - ADR-005
+ // ========================================================================
+*/
+
+/*
+ // ========================================================================
+ // CÓDIGO NUEVO - ADR-005: LOGGING CENTRALIZADO CON SLF4J PATTERN
+ // ========================================================================
+ // Mejora: Logging estructurado con SLF4J + Logback.
+ // Cumple SRP: Logging separado de lógica de negocio.
+ // Beneficios: Trazabilidad completa, debugging en producción, auditoría.
+ // ========================================================================
+*/
 
 // ========================================================================
 // GLOBAL EXCEPTION HANDLER (PARTE DE ADR-003)

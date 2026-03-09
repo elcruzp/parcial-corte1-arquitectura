@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.beans.factory.annotation.Value; // Removido - ahora usa JwtConfig
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -15,13 +15,21 @@ import java.util.Date;
 
 @Component
 public class JwtService {
+
+    // ========================================================================
+    // CAMBIO 5: CONFIGURACIÓN EXTERNALIZADA CON JWT CONFIG CLASS
+    // ========================================================================
+    // ANTES: @Value("${app.jwt.secret}") String secret (hardcoded injection)
+    // DESPUÉS: JwtConfig config (typed configuration class)
+    // Beneficio: Type safety, validation, mejor testability
+    // ========================================================================
+
     private final Key key;
     private final int expirationMinutes;
 
-    public JwtService(@Value("${app.jwt.secret}") String secret,
-                      @Value("${app.jwt.expiration-minutes}") int expirationMinutes) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.expirationMinutes = expirationMinutes;
+    public JwtService(JwtConfig config) {  // Inyección de JwtConfig (Cambio 5)
+        this.key = Keys.hmacShaKeyFor(config.getSecret().getBytes(StandardCharsets.UTF_8));
+        this.expirationMinutes = config.getExpirationMinutes();
     }
 
     public String generateToken(AppUser user) {

@@ -1,0 +1,83 @@
+# ========================================================================
+# CONFIGURACIÓN PRODUCCIÓN (CAMBIO 5: CONFIGURACIÓN EXTERNALIZADA)
+# ========================================================================
+# Perfil: prod
+# Uso: Entorno de producción con configuraciones seguras
+# TODAS las variables de entorno DEBEN estar definidas
+# NO usar valores por defecto en producción
+# ========================================================================
+
+spring:
+  # Configuración de BD para producción (requerida)
+  datasource:
+    url: ${DB_URL}  # REQUERIDA - No default
+    username: ${DB_USER}  # REQUERIDA - No default
+    password: ${DB_PASSWORD}  # REQUERIDA - No default
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Solo validar esquema en producción
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+        jdbc:
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+
+  security:
+    require-ssl: true  # Requerir HTTPS en producción
+
+# Configuración JWT para producción (más segura)
+app:
+  jwt:
+    secret: ${JWT_SECRET}  # REQUERIDA - No default
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}  # 1 hora en producción
+
+# Logging minimalista en producción
+logging:
+  level:
+    com.iglesia: INFO
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    root: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+  file:
+    name: ${LOG_FILE:/var/log/iglesias-admin/app.log}
+    max-size: 10MB
+    max-history: 30
+
+# Servidor de producción
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: ${CONTEXT_PATH:/api}
+  error:
+    include-stacktrace: never  # No mostrar stack traces en producción
+    include-message: always
+
+# Configuración de producción
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
