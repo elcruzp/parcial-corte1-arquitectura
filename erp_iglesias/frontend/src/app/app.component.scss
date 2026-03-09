@@ -1,0 +1,76 @@
+.shell {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 240px;
+  border-right: 1px solid #e0e0e0;
+  background: #ffffff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.brand mat-icon {
+  color: #3f51b5;
+}
+
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+}
+
+mat-nav-list a mat-icon {
+  color: #5b6478;
+}
+
+mat-nav-list a span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.page-title {
+  font-weight: 600;
+}
+
+.user-email {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-right: 8px;
+}
+
+.page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.public {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+a.active {
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.04);
+}

@@ -1,0 +1,61 @@
+<mat-sidenav-container class="shell" *ngIf="auth.isLoggedIn; else publicLayout">
+  <mat-sidenav class="sidenav" mode="side" opened>
+    <div class="brand">
+      <mat-icon aria-hidden="true">account_balance</mat-icon>
+      <span>IglesiAdmin</span>
+    </div>
+    <mat-nav-list aria-label="Navegación principal">
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon aria-hidden="true">dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/church" routerLinkActive="active">
+        <mat-icon aria-hidden="true">church</mat-icon>
+        <span>Iglesia</span>
+      </a>
+      <a mat-list-item routerLink="/users" routerLinkActive="active">
+        <mat-icon aria-hidden="true">group_add</mat-icon>
+        <span>Usuarios</span>
+      </a>
+      <a mat-list-item routerLink="/people" routerLinkActive="active">
+        <mat-icon aria-hidden="true">people</mat-icon>
+        <span>Personas</span>
+      </a>
+      <a mat-list-item routerLink="/courses" routerLinkActive="active">
+        <mat-icon aria-hidden="true">school</mat-icon>
+        <span>Cursos</span>
+      </a>
+      <a mat-list-item routerLink="/enrollments" routerLinkActive="active">
+        <mat-icon aria-hidden="true">assignment</mat-icon>
+        <span>Inscripciones</span>
+      </a>
+      <a mat-list-item routerLink="/offerings" routerLinkActive="active">
+        <mat-icon aria-hidden="true">volunteer_activism</mat-icon>
+        <span>Ofrendas</span>
+      </a>
+      <a mat-list-item routerLink="/payments" routerLinkActive="active">
+        <mat-icon aria-hidden="true">payments</mat-icon>
+        <span>Pagos</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="topbar">
+      <span class="page-title">Gestión Parroquial</span>
+      <span class="spacer"></span>
+      <span class="user-email" aria-label="Usuario autenticado">{{ auth.email }}</span>
+      <button mat-button (click)="logout()" aria-label="Cerrar sesión">Salir</button>
+    </mat-toolbar>
+
+    <main class="page" aria-live="polite">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #publicLayout>
+  <main class="public">
+    <router-outlet />
+  </main>
+</ng-template>
